@@ -17,7 +17,6 @@ pipeline {
                 }
             }
         }
-
 // Utility method - gets latest commit ID from git
 def getDockerTag(){
     def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
