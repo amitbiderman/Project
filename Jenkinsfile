@@ -17,7 +17,9 @@ pipeline {
                 }
             }
         }
+    }
 }
+
 
 // Utility method - gets latest commit ID from git
 def getDockerTag(){
