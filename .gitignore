@@ -1,2 +1,3 @@
 **/*.tgz
 vpc_cred
+ec2-k82.pem

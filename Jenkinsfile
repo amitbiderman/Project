@@ -14,7 +14,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
                     sh "docker login -u amitbiderman -p ${dockerHubPwd}"
                     sh "docker push amitbiderman/project:${DOCKER_TAG}"
-                    sshagent(['ec2-k8s]) {
+                    sshagent(['ec2-k8s']) {
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ec2-user@3.127.38.161:/home/ec2-user/"
                     script{
                         try{
