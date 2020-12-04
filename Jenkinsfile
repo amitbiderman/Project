@@ -15,12 +15,12 @@ pipeline {
                     sh "docker login -u amitbiderman -p ${dockerHubPwd}"
                     sh "docker push amitbiderman/project:${DOCKER_TAG}"
                     sshagent(['ec2-k8s']) {
-                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ec2-user@3.127.38.161:/home/ec2-user/"
+                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ec2-user@52.59.236.38:/home/ec2-user/"
                     script{
                         try{
-                            sh "ssh ec2-user@3.127.38.161 kubectl apply -f"
+                            sh "ssh ec2-user@52.59.236.38 kubectl apply -f"
                         }catch(error){
-                            sh "ssh ec2-user@3.127.38.161 kubectl create -f"
+                            sh "ssh ec2-user@52.59.236.38 kubectl create -f"
                         }
                     }
                 }
