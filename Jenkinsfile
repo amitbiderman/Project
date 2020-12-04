@@ -14,7 +14,14 @@ pipeline {
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
                     sh "docker login -u amitbiderman -p ${dockerHubPwd}"
                     sh "docker push amitbiderman/project:${DOCKER_TAG}"
-                    sshagent(['ec2-k8s']) {
+                }
+            }
+        }
+        stage('Deplopy to k8s'){
+            steps{
+                sh "chmod +x changeTag.sh"
+                sh "./changeTag.sh ${DOCKER_TAG}"
+                sshagent(['ec2-k8s']) {
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ec2-user@52.59.236.38:/home/ec2-user/"
                     script{
                         try{
@@ -23,8 +30,6 @@ pipeline {
                             sh "ssh ec2-user@52.59.236.38 kubectl create -f"
                         }
                     }
-                }
-                
                 }
             }
         }
